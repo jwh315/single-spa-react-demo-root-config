@@ -9,15 +9,17 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && eslint src"
+      "pre-commit": "pretty-quick --staged && concurrently yarn:lint"
     }
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@types/systemjs": "^6.1.0",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^6.0.0",
     "eslint": "^7.18.0",
     "eslint-config-important-stuff": "^1.1.0",
     "eslint-config-prettier": "^7.2.0",
@@ -36,6 +38,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "pubsub-js": "^1.9.3",
     "single-spa": "^5.9.1",
     "single-spa-layout": "^1.4.0"
   }

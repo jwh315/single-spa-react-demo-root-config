@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>React Microfrontends</title>
-  <meta name="importmap-type" content="systemjs-importmap" />
-  <script type="systemjs-importmap" src="https://storage.googleapis.com/react.microfrontends.app/importmap.json"></script>
-  <% if (isLocal) { %>
-  <script type="systemjs-importmap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Manager Demo</title>
+    <meta name="importmap-type" content="systemjs-importmap" />
+    <!--  <script type="systemjs-importmap" src="https://storage.googleapis.com/react.microfrontends.app/importmap.json"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+    <script type="systemjs-importmap">
+
     {
       "imports": {
-        "@react-mf/root-config": "//localhost:9000/react-mf-root-config.js"
+        "single-spa": "https://cdnjs.cloudflare.com/ajax/libs/single-spa/5.5.1/umd/single-spa.min.js",
+        "react": "https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.production.min.js",
+        "react-dom": "https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.production.min.js",
+        "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.6.3/system/es2015/rxjs.min.js",
+        "@cd/navbar": "//localhost:8501/cd-navbar.js",
+        "@cd/root-config": "//localhost:9000/react-mf-root-config.js",
+        "@cd/test": "//localhost:8500/centraldispatch-test-single-spa.js",
+        "@cd/styleguide": "//localhost:8502/cd-styleguide.js",
+        "@cd/login": "//localhost:8503/cd-login.js",
+        "@cd/models": "//localhost:8504/cd-models.js",
+        "@cd/dashboard": "//localhost:8505/cd-dashboard.js"
       }
     }
-  </script>
-  <% } %>
-  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
-  <template id="single-spa-layout">
-    <single-spa-router>
-      <nav class="topnav">
-        <application name="@react-mf/navbar" loader="topNav" error="topNav"></application>
-      </nav>
-      <div class="main-content mt-16">
-        <route path="people">
-          <application name="@react-mf/people"></application>
-        </route>
-        <route path="planets">
-          <application name="@react-mf/planets"></application>
-        </route>
-        <redirect from="/earth" to="/planets"></redirect>
-        <route default>
-          <h1 class="flex flex-row justify-center p-16">
-            <p class="max-w-md">This example project shows independently built and deployed microfrontends that use React and single-spa. Each nav link above takes you to a different microfrontend.</p>
-          </h1>
-        </route>
-      </div>
-    </single-spa-router>
-  </template>
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
 </head>
 <body>
-  <script>
-    System.import('@react-mf/root-config');
-    System.import('@react-mf/styleguide');
-  </script>
-  <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
+    <nav class="topnav">
+        <div id="single-spa-application:@cd/navbar"></div>
+    </nav>
+    <div class="main-content mt-16">
+        <div id="single-spa-application:@cd/test"></div>
+        <div id="single-spa-application:@cd/login"></div>
+        <div id="single-spa-application:@cd/dashboard"></div>
+    </div>
+    <script>
+      System.import('@cd/root-config');
+      System.import('@cd/styleguide');
+      System.import('@cd/models');
+    </script>
+    <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
 </body>
 </html>

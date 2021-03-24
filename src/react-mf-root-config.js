@@ -1,33 +1,50 @@
-import {
-  constructRoutes,
-  constructApplications,
-  constructLayoutEngine,
-} from "single-spa-layout";
 import { registerApplication, start } from "single-spa";
+import PubSub from "pubsub-js";
 
-const routes = constructRoutes(document.querySelector("#single-spa-layout"), {
-  loaders: {
-    topNav: "<h1>Loading topnav</h1>",
+const publish = (event, data) => PubSub.publish(event, data);
+const subscribe = (event, callback) => PubSub.subscribe(event, callback);
+
+const userFromStorage = localStorage.getItem("USER");
+
+let user = {};
+if (userFromStorage != null) {
+  user = JSON.parse(userFromStorage);
+}
+
+subscribe("USER_DATA_EVENT", (msg, data) => {
+  localStorage.setItem("USER", JSON.stringify(data));
+});
+
+const apps = [
+  {
+    name: "@cd/navbar",
+    route: (location) =>
+      ["/login", "/logout"].indexOf(location.pathname) === -1,
   },
-  errors: {
-    topNav: "<h1>Failed to load topnav</h1>",
+  { name: "@cd/test", route: "/test" },
+  {
+    name: "@cd/login",
+    route: (location) =>
+      ["/login", "/logout"].indexOf(location.pathname) !== -1,
   },
-});
-const applications = constructApplications({
-  routes,
-  loadApp: ({ name }) => System.import(name),
-});
-// Delay starting the layout engine until the styleguide CSS is loaded
-const layoutEngine = constructLayoutEngine({
-  routes,
-  applications,
-  active: false,
+  { name: "@cd/dashboard", route: "/dashboard" },
+];
+
+apps.forEach((app) => {
+  registerApplication({
+    name: app.name,
+    app: () => System.import(app.name),
+    activeWhen: app.route,
+    customProps: {
+      publish,
+      subscribe,
+      user,
+    },
+  });
 });
 
-applications.forEach(registerApplication);
+start();
 
-System.import("@react-mf/styleguide").then(() => {
-  // Activate the layout engine once the styleguide CSS is loaded
-  layoutEngine.activate();
-  start();
-});
+if (user.username == null && window.location.pathname != "/login") {
+  window.location = "/login";
+}
