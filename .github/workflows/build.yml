@@ -28,6 +28,12 @@ jobs:
       - name: Run yarn build
         run: yarn build
 
+      - name: Create deployment directory
+        run: mkdir -p dist/root-config/${GITHUB_SHA}
+
+      - name: move build files
+        run: mv dist/*.* dist/root-config/${GITHUB_SHA}
+
       - name: output dist directory contents
         run: ls -lah dist/
 
@@ -35,5 +41,5 @@ jobs:
         uses: reggionick/s3-deploy@v3
         with:
           folder: dist
-          bucket: single-spa-react-demo/root-config
+          bucket: single-spa-react-demo
           bucket-region: us-east-1
