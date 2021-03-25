@@ -27,13 +27,6 @@ jobs:
       - name: output dist directory contents
         run: ls -lah dist/
 
-      - name: s3 sync
-
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: chrislennon/action-aws-cli@v1.1
-
       - name: Push to S3
         run: aws s3 ls
         env:
