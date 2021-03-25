@@ -35,5 +35,5 @@ jobs:
         uses: reggionick/s3-deploy@v3
         with:
           folder: dist
-          bucket: single-spa-react-demo
+          bucket: single-spa-react-demo/root-config
           bucket-region: us-east-1
