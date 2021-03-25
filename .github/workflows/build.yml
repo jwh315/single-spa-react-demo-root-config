@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     strategy:
       matrix:
         node-version: [15.x]
@@ -17,7 +21,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: chrislennon/action-aws-cli@v1.1
 
       - name: Run yarn install
         run: yarn install
@@ -28,9 +31,9 @@ jobs:
       - name: output dist directory contents
         run: ls -lah dist/
 
-      - name: Push to S3
-        run: aws s3 ls
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Deploy
+        uses: reggionick/s3-deploy@v3
+        with:
+          folder: dist
+          bucket: single-spa-react-demo
+          bucket-region: us-east-1
