@@ -18,11 +18,12 @@
         "rxjs": "https://cdn.jsdelivr.net/npm/@esm-bundle/rxjs@6.6.3/system/es2015/rxjs.min.js",
         "@cd/navbar": "//localhost:8501/cd-navbar.js",
         "@cd/root-config": "//localhost:9000/react-mf-root-config.js",
-        "@cd/test": "//localhost:8500/centraldispatch-test-single-spa.js",
         "@cd/styleguide": "//localhost:8502/cd-styleguide.js",
         "@cd/login": "//localhost:8503/cd-login.js",
         "@cd/models": "//localhost:8504/cd-models.js",
-        "@cd/dashboard": "//localhost:8505/cd-dashboard.js"
+        "@cd/dashboard": "//localhost:8505/cd-dashboard.js",
+        "@cd/contact-list": "//localhost:8506/cd-contact-list.js",
+        "@cd/contact": "//localhost:8507/cd-contact.js"
       }
     }
 
@@ -38,6 +39,10 @@
         <div id="single-spa-application:@cd/test"></div>
         <div id="single-spa-application:@cd/login"></div>
         <div id="single-spa-application:@cd/dashboard"></div>
+        <div class="grid grid-cols-3 p-6">
+            <div id="single-spa-application:@cd/contact-list" class="col-span-2"></div>
+            <div id="single-spa-application:@cd/contact"></div>
+        </div>
     </div>
     <script>
       System.import('@cd/root-config');

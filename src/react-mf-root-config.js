@@ -28,6 +28,8 @@ const apps = [
       ["/login", "/logout"].indexOf(location.pathname) !== -1,
   },
   { name: "@cd/dashboard", route: "/dashboard" },
+  { name: "@cd/contact-list", route: "/contacts" },
+  { name: "@cd/contact", route: "/contacts" },
 ];
 
 apps.forEach((app) => {

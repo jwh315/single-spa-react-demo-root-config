@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Run yarn install
+        run: yarn install
+
+      - name: Run yarn build
+        run: yarn build
+
+      - name: output dist directory contents
+        run: ls -lah dist/
