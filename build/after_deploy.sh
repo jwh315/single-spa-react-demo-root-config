@@ -12,7 +12,11 @@ echo $(jq --arg ARG1 "@cd/${PROJECT}" --arg ARG2 "${NEW_URL}" '.imports[$ARG1] =
 echo "New Url = ${NEW_URL}"
 cat importmap.json
 
+ls -lah
+
+cat index.html
+
 echo "Uploading new import map to S3"
 aws s3 cp importmap.json s3://single-spa-react-demo/importmap.json --cache-control 'public, must-revalidate, max-age=0' --acl 'public-read'
-aws s3 cp index.html s3://single-spa-react-demo/index.html --cache-control 'public, must-revalidate, max-age=0' --acl 'public-read'
+aws s3 cp index.html s3://single-spa-react-demo/index.html --acl 'public-read'
 echo "Deployment successful"
