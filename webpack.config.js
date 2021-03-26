@@ -3,7 +3,7 @@ const singleSpaDefaults = require("webpack-config-single-spa");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (webpackConfigEnv, argv) => {
-  const orgName = "react-mf";
+  const orgName = "cd";
   const defaultConfig = singleSpaDefaults({
     orgName,
     projectName: "root-config",
