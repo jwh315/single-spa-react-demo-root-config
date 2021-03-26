@@ -13,5 +13,5 @@ cat importmap.json
 
 echo "Uploading new import map to S3"
 aws s3 cp importmap.json s3://single-spa-react-demo/importmap.json --cache-control 'public, must-revalidate, max-age=0' --acl 'public-read'
-aws s3 cp dist/index.html s3://single-spa-react-demo/index.html --acl 'public-read'
+aws s3 cp dist/${PROJECT}/${GITHUB_SHA}/index.html s3://single-spa-react-demo/index.html --acl 'public-read'
 echo "Deployment successful"
