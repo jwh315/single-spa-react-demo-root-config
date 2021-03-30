@@ -3,6 +3,7 @@ import PubSub from "pubsub-js";
 
 const publish = (event, data) => PubSub.publish(event, data);
 const subscribe = (event, callback) => PubSub.subscribe(event, callback);
+const unsubscribe = (subscriptionId) => PubSub.unsubscribe(subscriptionId);
 
 const userFromStorage = localStorage.getItem("USER");
 
@@ -38,8 +39,11 @@ apps.forEach((app) => {
     app: () => System.import(app.name),
     activeWhen: app.route,
     customProps: {
-      publish,
-      subscribe,
+      eventer: {
+        publish,
+        subscribe,
+        unsubscribe,
+      },
       user,
     },
   });
